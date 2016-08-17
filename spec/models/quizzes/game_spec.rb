@@ -1,14 +1,3 @@
-# == Schema Information
-#
-# Table name: quizzes_games
-#
-#  id         :integer          not null, primary key
-#  user_id    :integer
-#  level_id   :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-
 require 'rails_helper'
 
 module Quizzes
@@ -19,7 +8,7 @@ module Quizzes
     end
 
     it "should create a game for a user" do
-      game = Game.generate(create(:level), 20, create(:user))
+      game = Game.generate({ user: create(:user), level: create(:level), number_of_questions: 20 })
       expect(game.game_questions.size).to eq(20)
     end
 

@@ -1,18 +1,19 @@
-# == Schema Information
-#
-# Table name: quizzes_users
-#
-#  id         :integer          not null, primary key
-#  name       :string
-#  points     :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
-
 require 'rails_helper'
 
 module Quizzes
   RSpec.describe User, type: :model do
-    pending "add some examples to (or delete) #{__FILE__}"
+
+    it "should respond to games" do
+      expect(subject).to respond_to(:games)
+    end
+
+    it "should respond to questions" do
+      expect(subject).to respond_to(:game_questions)
+    end
+
+    it "should respond to game questions" do
+      expect(subject).to respond_to(:questions)
+    end
+
   end
 end

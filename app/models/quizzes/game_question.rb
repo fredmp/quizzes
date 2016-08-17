@@ -14,31 +14,37 @@ require_dependency "quizzes/application_record"
 
 module Quizzes
   class GameQuestion < ApplicationRecord
+
     belongs_to :game
     belongs_to :question
 
-    def self.generate_set game, questions
-      game_questions = []
-      questions.each do |question|
+    validates :game, :question, presence: true
 
-        seed_to_shuffle_answers = Random.new(question.id + Date.new.day.to_i)
-        game_questions << Quizzes::GameQuestion.new(game: game, question: question, seed_to_shuffle_answers: seed_to_shuffle_answers)
+    def self.generate_set(game, questions)
+      questions.map do |question|
+        Quizzes::GameQuestion.new(
+          game: game, question: question, seed_to_shuffle_answers: generate_seed_for(question)
+        )
       end
-      game_questions
     end
 
     def correct? answer_id
       question.correct_answer.id == answer_id
     end
 
-    def shuffled_answers
-      answers = question.answers
+    def answers
       [
-        {id: answers[0].id, text: answers[0].text},
-        {id: answers[1].id, text: answers[1].text},
-        {id: answers[2].id, text: answers[2].text},
-        {id: answers[3].id, text: answers[3].text}
+        {id: question.answers[0].id, text: question.answers[0].text},
+        {id: question.answers[1].id, text: question.answers[1].text},
+        {id: question.answers[2].id, text: question.answers[2].text},
+        {id: question.answers[3].id, text: question.answers[3].text}
       ].shuffle(random: seed_to_shuffle_answers)
+    end
+
+    private
+
+    def self.generate_seed_for(question)
+      Random.new(question.id + Date.new.day.to_i)
     end
   end
 end

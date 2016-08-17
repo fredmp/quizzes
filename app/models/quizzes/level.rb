@@ -14,5 +14,12 @@ require_dependency "quizzes/application_record"
 
 module Quizzes
   class Level < ApplicationRecord
+
+    validates :name, :code, :number_of_questions, presence: true
+
+    def self.all_and_nil
+      Level.all.to_a + [nil]
+    end
+
   end
 end

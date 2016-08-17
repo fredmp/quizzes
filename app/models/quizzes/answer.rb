@@ -14,6 +14,9 @@ require_dependency "quizzes/application_record"
 
 module Quizzes
   class Answer < ApplicationRecord
+
     belongs_to :question
+    validates :text, presence: true
+
   end
 end
