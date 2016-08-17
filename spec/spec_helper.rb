@@ -7,6 +7,8 @@ require "database_cleaner"
 
 Rails.backtrace_cleaner.remove_silencers!
 
+Rails.configuration.answers_limit_by_question = 4
+
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 

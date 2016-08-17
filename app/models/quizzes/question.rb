@@ -14,7 +14,7 @@ require_dependency "quizzes/application_record"
 module Quizzes
   class Question < ApplicationRecord
     belongs_to :level, optional: true
-    has_many :answers
+    has_many :answers, before_add: [:ensure_only_one_correct_answer, :check_answers_limit]
 
     def self.generate_set level = nil, number_of_questions = nil, already_used_questions = []
       number_of_questions = current_number_of_questions(number_of_questions, level)
@@ -33,9 +33,10 @@ module Quizzes
     end
 
     def correct_answer
-      for answer in answers do
-        return answer if answer.correct?
-      end
+      # for answer in answers do
+      #   return answer if answer.correct?
+      # end
+      self.answers.where(correct: true).first
     end
 
     private
@@ -56,6 +57,31 @@ module Quizzes
         return already_used_questions.map(&:id)
       end
       return [0]
+    end
+
+    def ensure_only_one_correct_answer(answer)
+      unless answer.correct? || correct_answer.present? || free_answer_slots > 1
+        raise "This question needs at least one correct answer"
+      end
+      if answer.correct? && correct_answer.present?
+        raise "A question can have only one correct answer"
+      end
+    end
+
+    def free_answer_slots
+      answers_limit - self.answers.size
+    end
+
+    def answer_limit_reached?
+      free_answer_slots < 1
+    end
+
+    def check_answers_limit(answer)
+      raise "This question have reached the limit of answers" if answer_limit_reached?
+    end
+
+    def answers_limit
+      Rails.configuration.answers_limit_by_question || 4
     end
 
   end
