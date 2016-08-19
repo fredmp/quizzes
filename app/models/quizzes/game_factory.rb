@@ -12,11 +12,11 @@ module Quizzes
       game.user = @user
       game.level = @level
 
-      questions = Quizzes::Question.generate_set(
-        group_of_levels,
-        verified_number_of_questions,
-        used_questions
-      )
+      questions = Quizzes::QuestionFactory.new({
+        levels: group_of_levels,
+        used_questions: used_questions,
+        number_of_questions: verified_number_of_questions
+      }).generate
 
       game.game_questions = Quizzes::GameQuestionFactory.new({ game: game, questions: questions }).generate
       game

@@ -15,8 +15,8 @@ require_dependency "quizzes/application_record"
 module Quizzes
   class GameQuestion < ApplicationRecord
 
-    belongs_to :game
-    belongs_to :question
+    belongs_to :game, foreign_key: "game_id", class_name: Quizzes::Game
+    belongs_to :question, foreign_key: "question_id", class_name: Quizzes::Question
 
     validates :game, :question, presence: true
 
