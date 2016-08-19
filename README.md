@@ -29,10 +29,26 @@ $ bin/rails db:migrate SCOPE=quizzes
 ```
 
 ## Usage
-How to use my plugin.
+The engine has "questions" and "game questions". The last one has a seed number used to shuffle the order of the answers. It is used to represent questions within a specific game.
+
+In order to create a new game with a set of game questions we can use a factory:
+```ruby
+user  = Quizzes::User.new(name: 'A great gamer') # You can also extend this class and use your own
+level = Quizzes::Level.first                     # A level is optional to create a game
+
+game  = Quizzes::GameFactory.new({ user: user, level: level, number_of_questions: 20 }).generate
+```
+Each new game will be composed this way:
+
+1. Unique questions for a particular game
+2. New questions for a user (considering all past games)
+3. Questions of the informed level
+
+If some of these definitions cannot be completely accomplished, it'll fulfill what is missing with any avaliable questions. Besides, if a user plays all available questions and face an old question again, at least we'll have a different order for the answers.
 
 ## Import
 You can import a CSV with questions. This file needs the following:
+
 - A row with headers
 - A column "question"
 - A column "correct_answer"
