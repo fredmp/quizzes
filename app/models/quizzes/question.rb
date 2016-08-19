@@ -24,7 +24,7 @@ module Quizzes
 
     validates :text, presence: true, uniqueness: true
 
-    def self.generate_set (levels, number_of_questions, used_questions = [])
+    def self.generate_set(levels, number_of_questions, used_questions = [])
       questions = search(levels, number_of_questions, used_question_ids(used_questions))
 
       unless all_requested_questions_found?(questions.size, number_of_questions)
@@ -83,7 +83,7 @@ module Quizzes
     end
 
     def check_answers_limit(answer)
-      raise "This question have reached the limit of answers" if answer_limit_reached?
+      raise "This question has reached the maximum number of allowed answers" if answer_limit_reached?
     end
 
     def answers_limit

@@ -3,7 +3,23 @@ require 'rails_helper'
 module Quizzes
   RSpec.describe Question, type: :model do
 
-    it "should allow only one correct answer" do
+    it { should validate_presence_of(:text) }
+    it { should validate_uniqueness_of(:text) }
+
+    it "limits the number of allowed answers" do
+      question = FactoryGirl.create(:question)
+
+      question.answers.create({ text: "Answer - 1", correct: true })
+      question.answers.create({ text: "Answer - 2", correct: false })
+      question.answers.create({ text: "Answer - 3", correct: false })
+      question.answers.create({ text: "Answer - 4", correct: false })
+
+      expect {
+        question.answers.create({ text: "Answer - 5", correct: false })
+      }.to raise_error("This question has reached the maximum number of allowed answers")
+    end
+
+    it "allows only one correct answer" do
       question = FactoryGirl.create(:question)
 
       question.answers.create({ text: "Answer - 1", correct: false })
@@ -15,7 +31,7 @@ module Quizzes
       }.to raise_error("A question can have only one correct answer")
     end
 
-    it "should ensure at least one correct answer" do
+    it "ensures at least one correct answer" do
       question = FactoryGirl.create(:question)
 
       question.answers.create({ text: "Answer - 1", correct: false })
@@ -33,17 +49,17 @@ module Quizzes
         create_questions_in_sequence(20)
       end
 
-      it "should return the informed number of questions" do
+      it "returns the informed number of questions" do
         questions = Question.generate_set(Level.all_and_nil, 2)
         expect(questions.size).to eq(2)
       end
 
-      it "should return existing number of questions when what is informed exceeds the total" do
+      it "returns existing number of questions when what is informed exceeds the total" do
         questions = Question.generate_set(Level.all_and_nil, 44)
         expect(questions.size).to eq(20)
       end
 
-      it "should consider the level" do
+      it "considers the level" do
         level = create(:level)
         question = create(:question, text: "Question of level #{level.name}", level: level)
 
@@ -52,12 +68,12 @@ module Quizzes
         expect(questions.first.text).to eq("Question of level #{level.name}")
       end
 
-      it "should return unique questions" do
+      it "returns unique questions" do
         ids = Question.generate_set(Level.all_and_nil, 10).map(&:id)
         expect(ids.size).to eq(ids.uniq.size)
       end
 
-      it "should avoid the ones already used" do
+      it "avoids questions already used" do
         level = create(:level)
         used_question = create(:question, text: "Question of level #{level.name}", level: level)
 

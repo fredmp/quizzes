@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
 
   s.add_development_dependency "pry"
-  s.add_development_dependency "shoulda"
+  s.add_development_dependency "shoulda-matchers", "~> 3.1"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "annotate"
   s.add_development_dependency "rspec-rails"
