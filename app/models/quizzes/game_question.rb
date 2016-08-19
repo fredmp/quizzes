@@ -20,14 +20,6 @@ module Quizzes
 
     validates :game, :question, presence: true
 
-    def self.generate_set(game, questions)
-      questions.map do |question|
-        Quizzes::GameQuestion.new(
-          game: game, question: question, seed_to_shuffle_answers: generate_seed_for(question)
-        )
-      end
-    end
-
     def correct? answer_id
       question.correct_answer.id == answer_id
     end
@@ -41,10 +33,5 @@ module Quizzes
       ].shuffle(random: seed_to_shuffle_answers)
     end
 
-    private
-
-    def self.generate_seed_for(question)
-      Random.new(question.id + Date.new.day.to_i)
-    end
   end
 end

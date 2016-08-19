@@ -7,16 +7,7 @@ module Quizzes
 
     before(:each) do
       create_questions_in_sequence(20)
-      @game = create(:game)
-      @questions = Question.all
-      @game_questions = GameQuestion.generate_set(@game, @questions)
-    end
-
-    it "builds a set of questions" do
-      expect(@game_questions.size).to eq(@questions.size)
-      game_question = @game_questions.first
-      expect(game_question.game).to eq(@game)
-      expect(game_question.question.answers.size).to eq(4)
+      @game_questions = GameQuestionFactory.new({ game: create(:game), questions: Question.all }).generate
     end
 
     it "does have only one correct answer among all choices" do

@@ -42,48 +42,5 @@ module Quizzes
         question.answers.create({ text: "Answer - 4", correct: false })
       }.to raise_error("This question needs at least one correct answer")
     end
-
-    context "#generate_set" do
-
-      before(:each) do
-        create_questions_in_sequence(20)
-      end
-
-      it "returns the informed number of questions" do
-        questions = Question.generate_set(Level.all_and_nil, 2)
-        expect(questions.size).to eq(2)
-      end
-
-      it "returns existing number of questions when what is informed exceeds the total" do
-        questions = Question.generate_set(Level.all_and_nil, 44)
-        expect(questions.size).to eq(20)
-      end
-
-      it "considers the level" do
-        level = create(:level)
-        question = create(:question, text: "Question of level #{level.name}", level: level)
-
-        questions = Question.generate_set([level], 1)
-
-        expect(questions.first.text).to eq("Question of level #{level.name}")
-      end
-
-      it "returns unique questions" do
-        ids = Question.generate_set(Level.all_and_nil, 10).map(&:id)
-        expect(ids.size).to eq(ids.uniq.size)
-      end
-
-      it "avoids questions already used" do
-        level = create(:level)
-        used_question = create(:question, text: "Question of level #{level.name}", level: level)
-
-        questions = Question.generate_set([level], 15, [used_question])
-
-        questions.each do |question|
-          expect(question).not_to eq(used_question)
-        end
-      end
-    end
   end
-
 end
