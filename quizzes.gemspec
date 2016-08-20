@@ -7,9 +7,9 @@ require "quizzes/version"
 Gem::Specification.new do |s|
   s.name        = "quizzes"
   s.version     = Quizzes::VERSION
-  s.authors     = ["Frederico"]
+  s.authors     = ["Frederico Martins Porto"]
   s.email       = ["martinsporto@gmail.com"]
-  s.homepage    = "https://bitbucket.org/fredmp/quizzes"
+  s.homepage    = "https://github.com/fredmp/quizzes.git"
   s.summary     = "A simple quiz engine based on rails"
   s.description = "A quiz engine that you can extend and customize to build your own game"
   s.license     = "MIT"
