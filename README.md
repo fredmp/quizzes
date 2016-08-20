@@ -62,7 +62,22 @@ $ rake "quizzes:import[/home/user/dir/file.csv]"
 ```
 
 ## Contributing
-Contribution directions go here.
+You can contribute to improve quizzes by testing it locally and then:
+
+- Suggesting new features
+- Reporting bugs
+- Forking it and submitting pull requests
+
+## Next possible steps
+
+- Questions with multiple choices
+- Rankings
+- Admin area
+- Multiplayer mode
+- Chat in multiplayer games
+- Integration with common social media networks
+- An optional command to install a set of basic views
+- A space where a user (no admin) can create new questions to contribute to the game (these questions could be moderated by an admin later)
 
 ## License
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
