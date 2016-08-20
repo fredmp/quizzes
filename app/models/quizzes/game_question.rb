@@ -18,7 +18,7 @@ module Quizzes
     belongs_to :game, foreign_key: "game_id", class_name: Quizzes::Game
     belongs_to :question, foreign_key: "question_id", class_name: Quizzes::Question
 
-    validates :game, :question, presence: true
+    validates :game, :question, :seed_to_shuffle_answers, presence: true
 
     def correct? answer_id
       question.correct_answer.id == answer_id

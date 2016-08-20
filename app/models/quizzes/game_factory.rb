@@ -18,7 +18,8 @@ module Quizzes
         number_of_questions: verified_number_of_questions
       }).generate
 
-      game.game_questions = Quizzes::GameQuestionFactory.new({ game: game, questions: questions }).generate
+      Quizzes::GameQuestionFactory.new({ game: game, questions: questions }).generate
+
       game
     end
 

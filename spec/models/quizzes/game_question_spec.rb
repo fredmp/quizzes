@@ -4,6 +4,8 @@ module Quizzes
   RSpec.describe GameQuestion, type: :model do
 
     it { should validate_presence_of(:game) }
+    it { should validate_presence_of(:question) }
+    it { should validate_presence_of(:seed_to_shuffle_answers) }
 
     before(:each) do
       create_questions_in_sequence(20)
