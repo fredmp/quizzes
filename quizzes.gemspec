@@ -19,11 +19,11 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 5.0.0", ">= 5.0.0.1"
 
-  s.add_development_dependency "pry"
+  s.add_development_dependency "pry", "~> 0.10"
   s.add_development_dependency "shoulda-matchers", "~> 3.1"
-  s.add_development_dependency "sqlite3"
-  s.add_development_dependency "annotate"
-  s.add_development_dependency "rspec-rails"
-  s.add_development_dependency "database_cleaner"
-  s.add_development_dependency "factory_girl_rails"
+  s.add_development_dependency "sqlite3", "~> 1.3"
+  s.add_development_dependency "annotate", "~> 2.7"
+  s.add_development_dependency "rspec-rails", "~> 3.5"
+  s.add_development_dependency "database_cleaner", "~> 1.5"
+  s.add_development_dependency "factory_girl_rails", "~> 4.7"
 end

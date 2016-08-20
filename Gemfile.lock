@@ -148,14 +148,14 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  annotate
-  database_cleaner
-  factory_girl_rails
-  pry
+  annotate (~> 2.7)
+  database_cleaner (~> 1.5)
+  factory_girl_rails (~> 4.7)
+  pry (~> 0.10)
   quizzes!
-  rspec-rails
+  rspec-rails (~> 3.5)
   shoulda-matchers (~> 3.1)
-  sqlite3
+  sqlite3 (~> 1.3)
 
 BUNDLED WITH
    1.12.5
